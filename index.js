@@ -14,15 +14,21 @@ import {
 import { handleValidationErrors, checkAuth } from "./utils/index.js";
 
 import { UserController, PostController } from "./controllers/index.js";
+import { MONGODB_URI, PORT } from "./config.js";
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log("DB OK");
-  })
-  .catch((err) => console.log("DB error", err));
+const connectToDatabase = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Connected to MongoDB successfully");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1);
+  }
+};
+connectToDatabase();
 
 const app = express();
 
@@ -85,7 +91,7 @@ app.patch(
   PostController.update
 );
 
-app.listen(process.env.PORT || 8080, (err) => {
+app.listen(PORT, (err) => {
   if (err) {
     return console.log(err);
   }

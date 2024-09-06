@@ -14,7 +14,7 @@ import {
 import { handleValidationErrors, checkAuth } from "./utils/index.js";
 
 import { UserController, PostController } from "./controllers/index.js";
-import { MONGODB_URI, PORT } from "./config.js";
+import { MONGODB_URI } from "./config.js";
 
 const connectToDatabase = async () => {
   try {
@@ -23,9 +23,8 @@ const connectToDatabase = async () => {
       useUnifiedTopology: true,
     });
     console.log("Connected to MongoDB successfully");
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-    process.exit(1);
+  } catch (err) {
+    console.error("Error connecting to MongoDB:", err);
   }
 };
 connectToDatabase();
@@ -91,7 +90,7 @@ app.patch(
   PostController.update
 );
 
-app.listen(PORT, (err) => {
+app.listen(8080, (err) => {
   if (err) {
     return console.log(err);
   }

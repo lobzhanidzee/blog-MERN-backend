@@ -2,7 +2,7 @@ import { config } from "dotenv";
 
 config();
 
-const requiredEnvVars = ["MONGODB_URI", "PORT"];
+const requiredEnvVars = ["MONGODB_URI"];
 
 requiredEnvVars.forEach((varName) => {
   if (!process.env[varName]) {
@@ -11,4 +11,3 @@ requiredEnvVars.forEach((varName) => {
 });
 
 export const MONGODB_URI = process.env.MONGODB_URI;
-export const PORT = process.env.PORT || 8080;
